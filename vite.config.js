@@ -1,16 +1,18 @@
 import { defineConfig } from 'vite'
-import laravel from 'laravel-vite-plugin'
+import AutoImport from 'unplugin-auto-import/vite'
+import Laravel from 'laravel-vite-plugin'
 import UnoCSS from 'unocss/vite'
-import vue from '@vitejs/plugin-vue'
+import Vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
   plugins: [
-    laravel({
+    AutoImport({ imports: ['vue'] }),
+    Laravel({
       input: 'resources/js/app.ts',
       refresh: true,
     }),
     UnoCSS(),
-    vue({
+    Vue({
       template: {
         transformAssetUrls: {
           base: null,
