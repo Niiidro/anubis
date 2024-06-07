@@ -21,11 +21,10 @@ class GithubController extends Controller
     {
         $username = 'supsign';  // Dein GitHub-Benutzername
         $reviewedPRs = $this->githubService->getReviewedPullRequests($username);
-        dd($reviewedPRs);
+        $pullRequests = $this->githubService->getPullRequests($username);
 
-        return Inertia::render('Profile/Edit', [
-            'github' => $request->user()->github,
-            'status' => session('status'),
+        return Inertia::render('Github/Index', [
+            'pullRequests' => $pullRequests
         ]);
     }
 }
