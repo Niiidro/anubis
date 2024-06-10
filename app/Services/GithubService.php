@@ -13,9 +13,15 @@ class GithubService
         $this->github = $github;
     }
 
-    public function getPullRequests($username)
+    public function getReviewPRs()
     {
-        $searchQuery = 'is:open is:pr archived:false user:' . $username;
+        $searchQuery = 'is:open is:pr -author:Niiidro archived:false user:supsign';
+        $results = $this->github->search()->issues($searchQuery);
+        return $results['items'];
+    }
+    public function getCreatedPRs()
+    {
+        $searchQuery = 'is:open is:pr author:Niiidro archived:false user:supsign';
         $results = $this->github->search()->issues($searchQuery);
         return $results['items'];
     }
@@ -28,7 +34,7 @@ class GithubService
         foreach ($pullRequests as $pr) {
             $repositoryUrlParts = explode('/', $pr['repository_url']);
             $owner = $repositoryUrlParts[4];
-            $repository = $repositoryUrlParts[5]; 
+            $repository = $repositoryUrlParts[5];
             $reviews = $this->github->pullRequest()->reviews()->all($owner, $repository, $pr['number']);
 
             foreach ($reviews as $review) {

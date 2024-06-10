@@ -19,12 +19,12 @@ class GithubController extends Controller
 
     public function index(Request $request): Response
     {
-        $username = 'supsign';  // Dein GitHub-Benutzername
-        $reviewedPRs = $this->githubService->getReviewedPullRequests($username);
-        $pullRequests = $this->githubService->getPullRequests($username);
+        $reviewPRs = $this->githubService->getReviewPRs();
+        $createdPRs = $this->githubService->getCreatedPRs();
 
         return Inertia::render('Github/Index', [
-            'pullRequests' => $pullRequests
+            'createdPRs' => $createdPRs,
+            'reviewPRs' => $reviewPRs
         ]);
     }
 }
